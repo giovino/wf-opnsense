@@ -20,6 +20,11 @@ This is some sample code of how you could submit firewall log data from OPNsense
  * Pfsense would likely work but it is untested
  * You must have root + shell access
 
+## Goals
+
+1. To demonstrate how you interact with Whiteface without using the SDK
+1. To not use any python libraries that were not already installed with OPNsense
+
 ## Install
 1. SSH into the OPNsense router (become root)
 1. change to root directory
