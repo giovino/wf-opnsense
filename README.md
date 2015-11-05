@@ -8,9 +8,9 @@ This is some sample code of how you could submit firewall log data from OPNsense
 
 1. A [Whiteface](https://whiteface.csirtgadgets.com) account
 1. A Whiteface account token; within Whiteface:
-  a. Select your username
-  a. Select "tokens"
-  a. Select "Generate Token
+ a. Select your username
+ a. Select "tokens"
+ a. Select "Generate Token
 1. A Whiteface feed; within Whiteface
   a. Select (the plus sign)
   a. Select Feed
