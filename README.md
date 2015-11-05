@@ -30,9 +30,9 @@ $ cd /root
 1. Download the wf-opnsense.py script using curl
 
  ```bash 
-$ curl -O curl -O https://raw.githubusercontent.com/giovino/wf-opnsense/master/wf-opnsense.py
+$ curl -O https://raw.githubusercontent.com/giovino/wf-opnsense/master/wf-opnsense.py
  ```
-1. edit wf-opnsense.py to add (WHITEFACE_USER, WHITEFACE_FEED, WHITEFACE_TOKEN)
+1. edit wf-opnsense.py to fill in (WHITEFACE_USER, WHITEFACE_FEED, WHITEFACE_TOKEN)
 
  ```bash
 vi wf-opnsense.py
