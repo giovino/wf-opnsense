@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is some sample code of how you could submit firewall log data from OPNsense to Whiteface.
+This is a sample script demonstrating how you could submit firewall log data from OPNsense to Whiteface.
 
 ## Requirements
 
