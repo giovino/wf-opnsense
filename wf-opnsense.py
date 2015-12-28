@@ -296,7 +296,6 @@ def submit_to_whiteface(firewall_logs, sent_count):
             'Content-Type': 'application/json',
             }
 
-    # may want to add source port (entry['source_port']))
     for entry in firewall_logs:
         if entry['ip_protocol'] == 'tcp':
             if entry['tcp_flags'] == 'S':
@@ -305,6 +304,7 @@ def submit_to_whiteface(firewall_logs, sent_count):
                         "thing": entry['source_ip'],
                         "tags": "scanner",
                         "portlist": entry['destination_port'],
+                        "portlist_src": entry['source_port'],
                         "protocol": entry['ip_protocol'],
                         "lastime": entry['timestamp'],
                     },
