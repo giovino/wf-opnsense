@@ -307,11 +307,8 @@ def submit_to_whiteface(firewall_logs, sent_count):
                         "portlist_src": entry['source_port'],
                         "protocol": entry['ip_protocol'],
                         "lastime": entry['timestamp'],
-                    },
-
-                    "comment": {
-                                "text": "sourced from firewall logs (incomming WAN, TCP, Syn, blocked)",
-                               }
+                        "description": "sourced from firewall logs (incomming WAN, TCP, Syn, blocked)",
+                    }
                 }
 
                 sent_count = post_to_whiteface(uri, data, headers, sent_count)
