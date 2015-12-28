@@ -289,7 +289,7 @@ def submit_to_whiteface(firewall_logs, sent_count):
     :param sent_count: type: int - number of logs previously submitted to Whiteface
     :return: int
     """
-    uri = WHITEFACE_REMOTE + '/users/{0}/feeds/{1}/observables'.format(WHITEFACE_USER, WHITEFACE_FEED)
+    uri = WHITEFACE_REMOTE + '/users/{0}/feeds/{1}/indicators'.format(WHITEFACE_USER, WHITEFACE_FEED)
     headers = {
             'Accept': 'application/vnd.whiteface.v0',
             'Authorization': 'Token token=' + WHITEFACE_TOKEN,
@@ -301,7 +301,7 @@ def submit_to_whiteface(firewall_logs, sent_count):
         if entry['ip_protocol'] == 'tcp':
             if entry['tcp_flags'] == 'S':
                 data = {
-                    "observable": {
+                    "indicator": {
                         "thing": entry['source_ip'],
                         "tags": "scanner",
                         "portlist": entry['destination_port'],
