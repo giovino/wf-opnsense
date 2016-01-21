@@ -5,7 +5,7 @@ pfsense / opnsense uses a Circular Log format known as clog to maintain a consta
 clog to obtain the firewall logs in plain text.
 
 to do:
-1. check for different response codes when submitting to WF
+1. check for different response codes when submitting to csirtg.io
 """
 
 from subprocess import check_call, check_output, STDOUT
@@ -18,17 +18,17 @@ import time
 import re
 
 # to be edited
-WHITEFACE_USER = ''
-WHITEFACE_FEED = ''
-WHITEFACE_TOKEN = ''
+CSIRTG_USER = ''
+CSIRTG_FEED = ''
+CSIRTG_TOKEN = ''
 
 WAN_INTERFACE_NAME = 'igb0'
 
 # should not have to be edited
 
-WHITEFACE_REMOTE = 'https://whiteface.csirtgadgets.com/api'
-WHITEFACE_LIMIT = 5000
-WHITEFACE_TIMEOUT = 300
+CSIRTG_REMOTE = 'https://csirtg.io/api'
+CSIRTG_LIMIT = 5000
+CSIRTG_TIMEOUT = 300
 
 LOG_FILE = '/var/log/filter.log'
 # DEV_LOG_FILE = 'filter.log'  # used for development only
@@ -281,18 +281,18 @@ def parse_logfile(logfile, timezone):
     return firewall_logs
 
 
-def submit_to_whiteface(firewall_logs, sent_count):
+def submit_to_csirtg(firewall_logs, sent_count):
     """
     Submit IP addresses that have been blocked by the firewall that are TCP and have the tcp_flags = 'S' (SYN)
 
     :param firewall_logs: type: list - list of dictionaries
-    :param sent_count: type: int - number of logs previously submitted to Whiteface
+    :param sent_count: type: int - number of logs previously submitted to csirtg.io
     :return: int
     """
-    uri = WHITEFACE_REMOTE + '/users/{0}/feeds/{1}/indicators'.format(WHITEFACE_USER, WHITEFACE_FEED)
+    uri = CSIRTG_REMOTE + '/users/{0}/feeds/{1}/indicators'.format(CSIRTG_USER, CSIRTG_FEED)
     headers = {
-            'Accept': 'application/vnd.whiteface.v0',
-            'Authorization': 'Token token=' + WHITEFACE_TOKEN,
+            'Accept': 'application/vnd.csirtg.v0',
+            'Authorization': 'Token token=' + CSIRTG_TOKEN,
             'Content-Type': 'application/json',
             }
 
@@ -311,15 +311,15 @@ def submit_to_whiteface(firewall_logs, sent_count):
                     }
                 }
 
-                sent_count = post_to_whiteface(uri, data, headers, sent_count)
+                sent_count = post_to_csirtg(uri, data, headers, sent_count)
     return sent_count
 
-                
-def post_to_whiteface(uri, data, headers, sent_count):
+ 
+def post_to_csirtg(uri, data, headers, sent_count):
     """
-    Post single records to whiteface
+    Post single records to csirtg.io
 
-    :param uri: type: str - Whiteface API endpoint
+    :param uri: type: str - csirtg API endpoint
     :param data: type: dict - firewall data to be posted
     :param headers: type: dict - http headers
     :param sent_count: type: int
@@ -335,7 +335,7 @@ def post_to_whiteface(uri, data, headers, sent_count):
             err = "error: status code: {0} message: {1}".format(r.status_code, r.text)
             logger.debug(err)
     except requests.exceptions.ConnectionError:
-        logger.debug('connection error to whiteface')
+        logger.debug('connection error to csirtg.io')
     return sent_count
         
    
@@ -351,7 +351,7 @@ if __name__ == "__main__":
 
     firewall_logs = parse_logfile(logfile, timezone)
 
-    sent_count = submit_to_whiteface(firewall_logs, sent_count)
+    sent_count = submit_to_csirtg(firewall_logs, sent_count)
 
-    logger.info('sent %s ip addresses to whiteface', sent_count)
+    logger.info('sent %s ip addresses to csirtg.io', sent_count)
     logger.info('ending firewall log parser')
